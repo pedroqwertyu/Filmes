@@ -2,6 +2,7 @@ git (git-scm.com)
 Node LTS
 next js (npx create-next-app@latest NOMEDOPROJETO)
 npm i bootstrap react-bootstrap
+.env.local
 npm run dev
 npm i axios
 rafce
