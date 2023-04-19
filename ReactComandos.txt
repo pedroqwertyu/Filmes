@@ -6,3 +6,14 @@ npm i bootstrap react-bootstrap
 npm run dev
 npm i axios
 rafce
+
+// getServerSideProps
+export async function getServerSideProps(context) {
+
+  const resultado = await apiFilmes.get('/movie/popular')
+  const filmes = resultado.data.results
+
+  return {
+    props: {filmes}, // will be passed to the page component as props
+  }
+}
