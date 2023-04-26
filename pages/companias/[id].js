@@ -3,7 +3,7 @@ import apiFilmes from '@/services/apiFilmes'
 import React from 'react'
 import { Card, Col, Row } from 'react-bootstrap'
 
-const Detalhes = ({ compania }) => {
+const Companias = ({ compania }) => {
   return (
     <Pagina titulo={compania.name}>
       <Row>
@@ -31,4 +31,4 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default Detalhes
+export default Companias
