@@ -1,3 +1,4 @@
+import Foto from '@/components/Foto'
 import Pagina from '@/components/Pagina'
 import apiFilmes from '@/services/apiFilmes'
 import Link from 'next/link'
@@ -26,7 +27,9 @@ const Detalhes = ({ filme, atores }) => {
             {filme.production_companies.map(item => (
               <Col key={item.id}>
                 <Card className='mb-3'>
-                  <Card.Img variant='top' src={'https://image.tmdb.org/t/p/w500' + item.logo_path}></Card.Img>
+                  {item.logo_path &&
+                    <Card.Img variant='top' src={'https://image.tmdb.org/t/p/w500' + item.logo_path}></Card.Img>
+                  }
                   <Card.Body>
                     <Card.Title>{item.name}</Card.Title>
                     <Link href={'/companias/' + item.id} className='btn btn-danger'>Detalhes</Link>
@@ -38,33 +41,24 @@ const Detalhes = ({ filme, atores }) => {
         </Col>
       </Row>
 
-      <h2>Atores</h2>
-    <Row>
-    {atores.map(item => (
-            <Col md={2} className="mb-3">
-            <Link href={"/atores/" + item.id}>
-            <Card.Img variant='top' src={'https://image.tmdb.org/t/p/w500'+item.profile_path}></Card.Img>
-            </Link>
-            </Col>
-        ))}   
-    </Row>
+      <Foto titulo='Atores' lista={atores} foto="profile_path" rota="/atores/" />
 
     </Pagina>
   )
 }
 
-export async function getServerSideProps(context){
+export async function getServerSideProps(context) {
 
-    const id = context.params.id
+  const id = context.params.id
 
-    const resultado=await apiFilmes.get("/movie/"+id+'?language=pt-BR')
-    const filme = resultado.data
+  const resultado = await apiFilmes.get("/movie/" + id + '?language=pt-BR')
+  const filme = resultado.data
 
-    const resAtores=await apiFilmes.get("/movie/"+id+'/credits?language=pt-BR')
-    const atores = resAtores.data.cast
-    return{
-      props:{filme, atores}
-    }
+  const resAtores = await apiFilmes.get("/movie/" + id + '/credits?language=pt-BR')
+  const atores = resAtores.data.cast
+  return {
+    props: { filme, atores }
   }
+}
 
-  export default Detalhes
+export default Detalhes
